@@ -30,13 +30,13 @@
           rust-combined =
             let
               stable = fenix.packages.${system}.toolchainOf {
-                channel = "1.77.0";
-                sha256 = "sha256-+syqAd2kX8KVa8/U2gz3blIQTTsYYt3U63xBWaGOSc8=";
+                channel = "1.78.0";
+                sha256 = "sha256-opUgs6ckUQCyDxcB9Wy51pqhd0MPGHUVbwRKKPGiwZU=";
               };
               nightly = fenix.packages.${system}.toolchainOf {
                 channel = "nightly";
-                date = "2024-03-27";
-                sha256 = "sha256-lI+VFFbRie8hMZHqzFXq69ebobNZ8Q/53czHXzzZINk=";
+                date = "2024-06-03";
+                sha256 = "sha256-2sho/kBk2dwzdTgHyCMWcoCF4mUFnJh6l3Gnm/AtNSk=";
               };
             in
             fenix.packages.${system}.combine [
