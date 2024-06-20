@@ -124,6 +124,7 @@
           # Environment to develop qdrant
           devShells.default = mkShellMold {
             buildInputs = qdrant-rust-inputs ++ [
+              pkgs.cargo-nextest # mentioned in .github/workflows/rust.yml
               pkgs.curl # used in tests
               pkgs.grpcurl # mentioned in QUICK_START_GRPC.md
               pkgs.wget # used in tests/storage-compat
