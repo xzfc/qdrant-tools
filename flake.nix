@@ -27,16 +27,18 @@
       perSystem =
         { pkgs, system, ... }:
         let
+	  versions = builtins.fromJSON (builtins.readFile ./versions.json);
+
           rust-combined =
             let
               stable = fenix.packages.${system}.toolchainOf {
-                channel = "1.78.0";
-                sha256 = "sha256-opUgs6ckUQCyDxcB9Wy51pqhd0MPGHUVbwRKKPGiwZU=";
+                channel = versions.stable.version;
+                sha256 = versions.stable.sha256;
               };
               nightly = fenix.packages.${system}.toolchainOf {
                 channel = "nightly";
-                date = "2024-06-03";
-                sha256 = "sha256-2sho/kBk2dwzdTgHyCMWcoCF4mUFnJh6l3Gnm/AtNSk=";
+                date = versions.nightly.date;
+                sha256 = versions.nightly.sha256;
               };
             in
             fenix.packages.${system}.combine [
