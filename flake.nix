@@ -77,22 +77,19 @@
           '';
 
           # Cache to speed up builds
-          caching-hook =
-            pkgs.makeSetupHook
-              {
-                name = "caching-hook";
-                propagatedBuildInputs = [
-                  pkgs.ccache
-                  pkgs.sccache
-                ];
-              }
-              (
-                pkgs.writeScript "run-caching-hook.sh" ''
-                  export CC="ccache $CC"
-                  export CXX="ccache $CXX"
-                  export RUSTC_WRAPPER="sccache"
-                ''
-              );
+          caching-hook = ''
+            # For C/C++ deps, particularly for librocksdb-sys
+            PATH="${pkgs.ccache}/bin:$PATH"
+            export CC="ccache $CC"
+            export CXX="ccache $CXX"
+
+            PATH="${pkgs.sccache}/bin:$PATH"
+            export RUSTC_WRAPPER="sccache"
+
+            # For lindera-unidic
+            [ "''${LINDERA_CACHE+x}" ] ||
+              export LINDERA_CACHE="''${XDG_CACHE_HOME:-$HOME/.cache}/lindera"
+          '';
 
           # Use mold linker to speed up builds
           mkShellMold = pkgs.mkShell.override {
@@ -102,7 +99,6 @@
           qdrant-rust-inputs = [
             cargo-wrapper # should be before rust-combined
             rust-combined
-            caching-hook
 
             # For deps
             pkgs.gnuplot # optional runtime dep for criterion
@@ -132,12 +128,14 @@
               pkgs.ytt # used in tools/generate_openapi_models.sh
               qdrant-python-env # used in tests
             ];
+            shellHook = caching-hook;
           };
 
           # Environment to run RustRover
           # TODO: make a runnable package, not a shell
           devShells.jb = mkShellMold {
             buildInputs = qdrant-rust-inputs ++ [ pkgs.jetbrains.rust-rover ];
+            shellHook = caching-hook;
           };
 
           # Enviroment to maintain this repo contents
