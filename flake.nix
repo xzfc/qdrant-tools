@@ -27,7 +27,7 @@
       perSystem =
         { pkgs, system, ... }:
         let
-	  versions = builtins.fromJSON (builtins.readFile ./versions.json);
+          versions = builtins.fromJSON (builtins.readFile ./versions.json);
 
           rust-combined =
             let
@@ -48,10 +48,12 @@
               stable.rust-src
             ];
 
+          qdrant-src = pkgs.fetchFromGitHub (versions.qdrant);
+
           # Python dependencies used in tests
           poetry2nix' = poetry2nix.lib.mkPoetry2Nix { inherit pkgs; };
           qdrant-python-env = poetry2nix'.mkPoetryEnv {
-            projectDir = ./poetry;
+            projectDir = ''${qdrant-src}/tests'';
 
             # 1. Wheels speed up building of the environment
             # 2. PyYAML/cython3 issues: https://github.com/nix-community/poetry2nix/pull/1559
@@ -141,13 +143,13 @@
           # Enviroment to maintain this repo contents
           devShells.dev = pkgs.mkShell {
             buildInputs = [
+              pkgs.nix-prefetch-github # ./update.py
               pkgs.black # ./Justfile
               pkgs.deadnix # ./Justfile
               pkgs.isort # ./Justfile
               pkgs.just # for running Justfile
               pkgs.mypy # ./Justfile
               pkgs.nixfmt-rfc-style # ./Justfile
-              pkgs.poetry # ./poetry/regen.py
             ];
           };
         };

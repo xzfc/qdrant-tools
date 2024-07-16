@@ -7,5 +7,11 @@
   "stable": {
     "version": "1.79.0",
     "sha256": "3608b3efa60fe074d8ef9186747d8ff803c4fc3108c7647f0e7f81c303b2cd95"
+  },
+  "qdrant": {
+    "owner": "qdrant",
+    "repo": "qdrant",
+    "rev": "4aac02315bb3ca461a29484094cf6d19025fce99",
+    "hash": "sha256-H1b275dVZGjkvXCV/zHDQtIrJiFMc7tmxbHh3B1+nPE="
   }
 }

@@ -7,4 +7,3 @@
 
 - `nix flake update`
 - `nix develop '.#dev' -c ./update.py`
-- `nix develop '.#dev' -c ./poetry/regen.py $PATH_TO_QDRANT_REPO`
