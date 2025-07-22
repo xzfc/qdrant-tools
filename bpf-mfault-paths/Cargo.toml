@@ -1,0 +1,16 @@
+[package]
+name = "mmfault_paths"
+version = "0.1.0"
+edition = "2021"
+
+[build-dependencies]
+libbpf-cargo = "0.25.0"
+vmlinux = { git = "https://github.com/libbpf/vmlinux.h.git", rev = "83a228cf37fc65f2d14e4896a04922b5ee531a94" }
+
+[dependencies]
+anyhow = "1.0"
+blazesym = "0.2.0-rc.4"
+clap = { version = "4.0.32", features = ["derive"] }
+libbpf-rs = "0.25.0"
+time = { version = "0.3", features = ["formatting", "local-offset", "macros"] }
+zerocopy = { version = "0.8", features = ["derive"] } 

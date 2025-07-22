@@ -1,0 +1,4 @@
+/.cache
+/src/bpf/*.skel.rs
+/target
+compile_commands.json
